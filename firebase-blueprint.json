@@ -1,0 +1,257 @@
+{
+  "entities": {
+    "Equipment": {
+      "title": "Equipment",
+      "description": "Educational technology equipment item available for borrowing",
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "Equipment unique code e.g. CAM-001",
+          "maxLength": 64
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the equipment",
+          "maxLength": 200
+        },
+        "category": {
+          "type": "string",
+          "description": "Equipment category e.g. กล้องถ่ายภาพ, ไมโครโฟน",
+          "maxLength": 100
+        },
+        "totalQuantity": {
+          "type": "number",
+          "description": "Total quantity of this item owned by department"
+        },
+        "availableQuantity": {
+          "type": "number",
+          "description": "Current quantity available for borrowing"
+        },
+        "status": {
+          "type": "string",
+          "description": "Status: available, maintenance, out_of_service",
+          "enum": ["available", "maintenance", "out_of_service"]
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "URL or storage link of the equipment photo",
+          "maxLength": 2048
+        },
+        "details": {
+          "type": "string",
+          "description": "Detailed specifications and borrowing notes",
+          "maxLength": 2000
+        },
+        "location": {
+          "type": "string",
+          "description": "Storage location e.g. Studio Lab 302, Cabinet B",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["code", "name", "category", "totalQuantity", "availableQuantity", "status"]
+    },
+    "Booking": {
+      "title": "Booking",
+      "description": "Borrowing and reservation request made by users",
+      "type": "object",
+      "properties": {
+        "equipmentId": {
+          "type": "string",
+          "description": "Reference ID of the equipment document",
+          "maxLength": 128
+        },
+        "equipmentName": {
+          "type": "string",
+          "description": "Snapshot of equipment name",
+          "maxLength": 200
+        },
+        "equipmentCode": {
+          "type": "string",
+          "description": "Snapshot of equipment code",
+          "maxLength": 64
+        },
+        "equipmentImageUrl": {
+          "type": "string",
+          "description": "Snapshot of equipment image",
+          "maxLength": 2048
+        },
+        "userId": {
+          "type": "string",
+          "description": "UID of the borrower",
+          "maxLength": 128
+        },
+        "userName": {
+          "type": "string",
+          "description": "Name of the borrower",
+          "maxLength": 128
+        },
+        "userEmail": {
+          "type": "string",
+          "description": "Email of the borrower",
+          "maxLength": 128
+        },
+        "userPhone": {
+          "type": "string",
+          "description": "Phone number of the borrower",
+          "maxLength": 32
+        },
+        "userStudentId": {
+          "type": "string",
+          "description": "Student or staff ID of borrower",
+          "maxLength": 64
+        },
+        "userDepartment": {
+          "type": "string",
+          "description": "Department or faculty",
+          "maxLength": 128
+        },
+        "quantity": {
+          "type": "number",
+          "description": "Number of units requested"
+        },
+        "borrowDate": {
+          "type": "string",
+          "description": "Borrow date (YYYY-MM-DD)",
+          "maxLength": 20
+        },
+        "returnDate": {
+          "type": "string",
+          "description": "Expected return date (YYYY-MM-DD)",
+          "maxLength": 20
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Purpose and course/project for borrowing",
+          "maxLength": 1000
+        },
+        "status": {
+          "type": "string",
+          "description": "Booking status",
+          "enum": ["pending", "approved", "returned", "rejected", "cancelled"]
+        },
+        "conditionOnReturn": {
+          "type": "string",
+          "description": "Condition check when equipment is returned",
+          "maxLength": 500
+        },
+        "adminNotes": {
+          "type": "string",
+          "description": "Notes from admin upon approval, return or rejection",
+          "maxLength": 1000
+        },
+        "approvedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "returnedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["equipmentId", "equipmentName", "userId", "userEmail", "quantity", "borrowDate", "returnDate", "purpose", "status"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile document storing contact and identity details",
+      "type": "object",
+      "properties": {
+        "uid": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "email": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "displayName": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "photoURL": {
+          "type": "string",
+          "maxLength": 2048
+        },
+        "studentId": {
+          "type": "string",
+          "maxLength": 64
+        },
+        "department": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "phone": {
+          "type": "string",
+          "maxLength": 32
+        },
+        "role": {
+          "type": "string",
+          "enum": ["admin", "user"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["uid", "email"]
+    },
+    "AdminConfig": {
+      "title": "AdminConfig",
+      "description": "Authorized administrator emails",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "addedBy": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["email"]
+    }
+  },
+  "firestore": {
+    "/equipments/{equipmentId}": {
+      "schema": "Equipment",
+      "description": "List of available and archived equipment catalog items"
+    },
+    "/bookings/{bookingId}": {
+      "schema": "Booking",
+      "description": "All equipment borrowing and reservation requests"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "User profile with contact info and role"
+    },
+    "/admin_emails/{emailId}": {
+      "schema": "AdminConfig",
+      "description": "List of emails permitted to have administrative access"
+    }
+  }
+}
